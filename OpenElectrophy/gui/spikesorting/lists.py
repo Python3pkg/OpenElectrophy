@@ -63,10 +63,10 @@ class ModelSpikeList(QAbstractItemModel):
         s = sps.get_seg_from_num(row)
         if role ==Qt.DisplayRole :
             if col == 0:
-                return u'{}'.format(row)
+                return '{}'.format(row)
             elif col == 1:
                 
-                return u'{}'.format(s)
+                return '{}'.format(s)
             elif col == 2:
                 if sps.sig_sampling_rate is not None:
                     sr = sps.sig_sampling_rate.rescale('Hz').magnitude
@@ -77,12 +77,12 @@ class ModelSpikeList(QAbstractItemModel):
                 sl = sps.seg_spike_slices[s]
                 spike_time = spike_indexes[row-sl.start]/sr+t_start                
                 #~ return u'TODO '
-                return u'{}'.format(spike_time)
+                return '{}'.format(spike_time)
 
             
             elif col == 3:
                 if sps.spike_clusters is None :#or sps.cluster_displayed_subset is None:
-                    return u''
+                    return ''
                 else:
                     c = sps.spike_clusters[row]
                     return'{}'.format(row in sps.cluster_displayed_subset[c])
@@ -268,7 +268,7 @@ class UnitList(SpikeSortingWidgetBase):
                 pix.fill(QColor( r*255,g*255,b*255  ))
                 icon = QIcon(pix)
             if c in sps.cluster_names: name = sps.cluster_names[c]
-            else: name = u''
+            else: name = ''
 
 
             item = QTableWidgetItem(str(c))
@@ -323,25 +323,25 @@ class UnitList(SpikeSortingWidgetBase):
         self.menu = menu = QMenu()
         #~ print 'n', n
         if n>=0: 
-            act = menu.addAction(QIcon(':/applications-graphics.png'), u'Recolorize all cluster')
+            act = menu.addAction(QIcon(':/applications-graphics.png'), 'Recolorize all cluster')
             act.triggered.connect(self.recolorizeCluster)
-            act = menu.addAction(QIcon(':/view-filter.png'), u'Sort by ascending waveform power')
+            act = menu.addAction(QIcon(':/view-filter.png'), 'Sort by ascending waveform power')
             act.triggered.connect(self.sortCluster)
-            act = menu.addAction(QIcon(':/TODO.png'), u'Show all')
+            act = menu.addAction(QIcon(':/TODO.png'), 'Show all')
             act.triggered.connect(self.showAll)
-            act = menu.addAction(QIcon(':/TODO.png'), u'Hide all')
+            act = menu.addAction(QIcon(':/TODO.png'), 'Hide all')
             act.triggered.connect(self.hideAll)
             
         if n>=1:
-            act = menu.addAction(QIcon(':/window-close.png'),u'Delete selection forever')
+            act = menu.addAction(QIcon(':/window-close.png'),'Delete selection forever')
             act.triggered.connect(self.deleteSelection)
-            act = menu.addAction(QIcon(':/user-trash.png'), u'Move selection to trash')
+            act = menu.addAction(QIcon(':/user-trash.png'), 'Move selection to trash')
             act.triggered.connect(self.moveToTrash)
-            act = menu.addAction(QIcon(':/merge.png'), u'Group selection in one unit')
+            act = menu.addAction(QIcon(':/merge.png'), 'Group selection in one unit')
             act.triggered.connect(self.groupSelection)
-            act = menu.addAction(QIcon(':/color-picker.png'), u'Select these spikes')
+            act = menu.addAction(QIcon(':/color-picker.png'), 'Select these spikes')
             act.triggered.connect(self.selectSpikeFromCluster)
-            act = menu.addAction(QIcon(':/go-jump.png'), u'Regroup small units')
+            act = menu.addAction(QIcon(':/go-jump.png'), 'Regroup small units')
             act.triggered.connect(self.regroupSmallUnits)
         
         #~ act = menu.addAction(QIcon(':/TODO.png'), u'Hide/Show on ndviewer and waveform')
@@ -351,7 +351,7 @@ class UnitList(SpikeSortingWidgetBase):
             # one selected row only
             #~ act = menu.addAction(QIcon(':/Clustering.png'), u'Explode cluster (sub clustering)')
             #~ act.triggered.connect(self.subComputeCluster)
-            act = menu.addAction(QIcon(':/TODO.png'), u'Set name/color/score of this unit')
+            act = menu.addAction(QIcon(':/TODO.png'), 'Set name/color/score of this unit')
             act.triggered.connect(self.setUnitNameColorScore)
         
         #~ if menu.exec_(self.cursor().pos()):
@@ -468,7 +468,7 @@ class UnitList(SpikeSortingWidgetBase):
             c = self.cluster_list[r]
         
         if c in sps.cluster_names: name = sps.cluster_names[c]
-        else: name = u''
+        else: name = ''
         #~ if c in sps.sortingScores: sortingScore = sps.sortingScores[c]
         #~ else: sortingScore = ''
         

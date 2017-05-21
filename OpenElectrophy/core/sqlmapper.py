@@ -374,7 +374,7 @@ def create_table_from_class(oeclass, metadata):
     table =  Table(oeclass.tablename, metadata, Column('id', Integer, primary_key=True, index = True)  , mysql_charset='utf8', mysql_engine='InnoDB',)
     #~ table =  Table(oeclass.tablename, metadata, Column('id', Integer, primary_key=True, index = True)  , mysql_engine='InnoDB',)
     table.create()
-    for attrname, attrtype in oeclass.usable_attributes.items():
+    for attrname, attrtype in list(oeclass.usable_attributes.items()):
         create_column_if_not_exists(table,  attrname, attrtype)
     return table
 
@@ -402,16 +402,16 @@ def create_or_update_database_schema(engine, oeclasses, max_binary_size = MAX_BI
     for oeclass in oeclasses:
         tablename = oeclass.tablename
         
-        if tablename not in metadata.tables.keys() :
+        if tablename not in list(metadata.tables.keys()) :
             # create table that are not present in db from class_names list
             table = create_table_from_class(oeclass, metadata)
         else:
             #check if all attributes are in SQL columns
             table = metadata.tables[tablename]
-            for attrname, attrtype in oeclass.usable_attributes.items():
+            for attrname, attrtype in list(oeclass.usable_attributes.items()):
                 create_column_if_not_exists(table,  attrname, attrtype)
     
-    if 'NumpyArrayTable' not in metadata.tables.keys() :
+    if 'NumpyArrayTable' not in list(metadata.tables.keys()) :
         c1 =  Column('id', Integer, primary_key=True, index = True)
         c2 = Column('dtype', String(128))
         c3 = Column('shape', String(128))
@@ -478,7 +478,7 @@ def create_classes_from_schema_sniffing( engine, oeclasses,
     metadata.reflect()
     
     all_many_to_many = { }
-    for tablename, table in metadata.tables.items() :
+    for tablename, table in list(metadata.tables.items()) :
         if tablename == 'NumpyArrayTable':
             continue
         
@@ -539,7 +539,7 @@ def create_classes_from_schema_sniffing( engine, oeclasses,
                 # when metadat.reflect() return the highest level type (Ex: sa.DATETIME and not sa.DateTime)
                 # so we must go up in class inheritance
                 t = None
-                for ptype, satype in python_to_sa_conversion.items():
+                for ptype, satype in list(python_to_sa_conversion.items()):
                     #~ print col.name, ptype, satype, col.type, type(col.type), issubclass(type(col.type), satype)
                     if issubclass(type(col.type), satype):
                         t = ptype
@@ -558,7 +558,7 @@ def create_classes_from_schema_sniffing( engine, oeclasses,
         tablename_to_generated_class[genclass.tablename] = genclass
     
     # many to many relationship
-    for k,v in all_many_to_many.items():
+    for k,v in list(all_many_to_many.items()):
         if v not in tablename_to_generated_class[k].many_to_many_relationship:
             tablename_to_generated_class[k].many_to_many_relationship.append(v)
             tablename_to_generated_class[v].many_to_many_relationship.append(k)
@@ -809,7 +809,7 @@ class EventOnHdf5Load:
         self.hfile = hfile
     def __call__(self, target, context):
         #~ print 'EventOnHdf5Load', target.tablename, target.id
-        for attrname, attrtype in target.usable_attributes.items():
+        for attrname, attrtype in list(target.usable_attributes.items()):
             if attrtype == np.ndarray or attrtype == pq.Quantity:
                 arr = load_array_from_hdf5_file(self.hfile, target, attrname, attrtype)
                 #~ print 'in load', type(target), attrname, arr
@@ -821,7 +821,7 @@ class EventOnHdf5AfterInsert:
         self.hfile = hfile
     def __call__(self, mapper, connection, target):
         #~ print 'EventOnHdf5AfterInsert', target.tablename, target.id
-        for attrname, attrtype in target.usable_attributes.items():
+        for attrname, attrtype in list(target.usable_attributes.items()):
             if attrtype == np.ndarray or attrtype == pq.Quantity:
                 if not hasattr(target, attrname+'_array' ): continue
                 arr = getattr(target, attrname+'_array' )
@@ -834,7 +834,7 @@ class EventOnHdf5AfterUpdate:
         self.hfile = hfile
     def __call__(self, mapper, connection, target):
         #~ print 'EventOnHdf5AfterUpdate', target.tablename, target.id
-        for attrname, attrtype in target.usable_attributes.items():
+        for attrname, attrtype in list(target.usable_attributes.items()):
             if attrtype == np.ndarray or attrtype == pq.Quantity:
                 if not hasattr(target, attrname+'_array' ): continue
                 arr = getattr(target, attrname+'_array' )
@@ -845,7 +845,7 @@ class EventOnHdf5AfterDelete:
     def __init__(self, hfile = None):
         self.hfile = hfile
     def __call__(self, mapper, connection, target):
-        print('EventOnHdf5AfterDelete', target.tablename, target.id, 'TODO')
+        print(('EventOnHdf5AfterDelete', target.tablename, target.id, 'TODO'))
 
 
 
@@ -891,7 +891,7 @@ def map_generated_classes(engine, generated_classes, relationship_lazy = 'select
         for parentname in genclass.many_to_one_relationship :
             table.c[parentname.lower()+'_id'].append_foreign_key( ForeignKey(parentname+'.id') ) 
         
-        for attrname, attrtype in genclass.usable_attributes.items():
+        for attrname, attrtype in list(genclass.usable_attributes.items()):
             if attrtype == np.ndarray or attrtype == pq.Quantity:
                 if attrtype == np.ndarray: id_name = '_numpy_id'
                 elif attrtype ==  pq.Quantity: id_name = '_quantity_id'
@@ -949,7 +949,7 @@ def map_generated_classes(engine, generated_classes, relationship_lazy = 'select
                                                                                         
             
             # one to one relationship with NumpyArrayTable
-        for attrname, attrtype in genclass.usable_attributes.items():
+        for attrname, attrtype in list(genclass.usable_attributes.items()):
             if attrtype == np.ndarray or attrtype == pq.Quantity:
                 if attrtype == np.ndarray: id_name = '_numpy_id'
                 elif attrtype ==  pq.Quantity: id_name = '_quantity_id'
@@ -970,7 +970,7 @@ def map_generated_classes(engine, generated_classes, relationship_lazy = 'select
         orm.mapper(genclass , table , properties = properties , )
     
         # magic reconstruction for  np.ndarray pq.Quantity (pq.Quantity scalar)
-        for attrname, attrtype in genclass.usable_attributes.items():
+        for attrname, attrtype in list(genclass.usable_attributes.items()):
             if attrtype == np.ndarray or attrtype == pq.Quantity:
                 if numpy_storage_engine ==  'sqltable':
                     np_dyn_load = SQL_NumpyArrayPropertyLoader(attrname, arraytype =attrtype, compress = compress, NumpyArrayTableClass = NumpyArrayTableClass)
@@ -1176,9 +1176,9 @@ def execute_sql(query ,session = None, column_split = True,
     if len(res) == 0:
         if column_split :
             if column_as_numpy:
-                res = [ np.array([ ]) for i in pres.keys() ]
+                res = [ np.array([ ]) for i in list(pres.keys()) ]
             else:
-                res = [ [ ] for i in pres.keys() ]
+                res = [ [ ] for i in list(pres.keys()) ]
         else:
             res = [ ]
     else:

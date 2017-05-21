@@ -233,7 +233,7 @@ class ToolChainWidget(QWidget):
                                             toolButtonStyle = Qt.ToolButtonTextBesideIcon,
                                             icon = QIcon(':/configure.png' ),
                                             #~ )
-                                            text = u'Mode')
+                                            text = 'Mode')
         h.addWidget(but)
         self.actions = [ ]
         for tc in all_toolchain:
@@ -273,7 +273,7 @@ class ToolChainWidget(QWidget):
         self.mainLayout.addWidget(self.toolbox)
         i = 0
         self.all_params = OrderedDict()
-        for name, methods in toolchain.chain.items():
+        for name, methods in list(toolchain.chain.items()):
             i+=1
             w = QWidget()
             h= QHBoxLayout()
@@ -301,7 +301,7 @@ class ToolChainWidget(QWidget):
         self.need_refresh.emit()
     
     def run_all_chain(self):
-        for name, mparams in self.all_params.items():
+        for name, mparams in list(self.all_params.items()):
             #~ print name
             kargs = mparams.get_dict()
             method =  mparams.get_method()

@@ -128,7 +128,7 @@ class SignalViewer(ViewerBase):
         pglobal = [ p['name'] for p in param_global]
         pchan = [ p['name']+'s' for p in param_by_channel]
         nb_channel = len(self.analogsignals)
-        for k, v in kargs.items():
+        for k, v in list(kargs.items()):
             if k in pglobal:
                 self.paramGlobal.param(k).setValue(v)
             elif k in pchan:
@@ -250,7 +250,7 @@ class SignalViewer(ViewerBase):
         
         t_start, t_stop = self.t-self.xsize/3. , self.t+self.xsize*2/3.
         
-        for key, sig_nums in self.times_familly.items():
+        for key, sig_nums in list(self.times_familly.items()):
             if fast:
                 decimate = self.max_point_if_decimate
             else:
@@ -319,7 +319,7 @@ class SignalViewer(ViewerBase):
             elif mode==2 :
                 gains[sd!=0] = 1./(6.*sd[sd!=0])
             offsets = np.zeros(nb_channel, dtype = float)
-            offsets[selected] = range(n)[::-1] - av[selected]*gains[selected]
+            offsets[selected] = list(range(n))[::-1] - av[selected]*gains[selected]
         
         # apply
         self.set_params(gains = gains, offsets = offsets, visibles = selected,
@@ -362,7 +362,7 @@ class SignalViewerControler(QWidget):
         #layout
         self.mainlayout = QVBoxLayout()
         self.setLayout(self.mainlayout)
-        t = u'Options for AnalogSignals'
+        t = 'Options for AnalogSignals'
         self.setWindowTitle(t)
         self.mainlayout.addWidget(QLabel('<b>'+t+'<\b>'))
         
@@ -388,7 +388,7 @@ class SignalViewerControler(QWidget):
         self.treeParamGlobal.setParameters(self.viewer.paramGlobal, showTop=True)
 
         # Gain and offset
-        v.addWidget(QLabel(u'<b>Automatic gain and offset on selection:<\b>'))
+        v.addWidget(QLabel('<b>Automatic gain and offset on selection:<\b>'))
         for i,text in enumerate(['Real scale (gain = 1, offset = 0)',
                             'Fake scale (same gain for all)',
                             'Fake scale (gain per channel)',]):

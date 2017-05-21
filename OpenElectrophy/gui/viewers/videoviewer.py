@@ -260,7 +260,7 @@ class VideoViewerControler(QWidget):
         self.mainlayout = QVBoxLayout()
         self.setLayout(self.mainlayout)
         
-        t = u'Options for EpochArrays'
+        t = 'Options for EpochArrays'
         self.setWindowTitle(t)
         self.mainlayout.addWidget(QLabel('<b>'+t+'<\b>'))
         

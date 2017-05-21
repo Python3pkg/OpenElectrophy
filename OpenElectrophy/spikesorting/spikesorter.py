@@ -414,7 +414,7 @@ class SpikeSorter(object):
         if len(self.cluster_names)>0:
             t += 'Nb of cluster : {}\n'.format(len(self.cluster_names))
             t += 'Spike by cluster : '
-            for c, name in self.cluster_names.items():
+            for c, name in list(self.cluster_names.items()):
                 t+= "  '{}': {}  -".format(name, np.sum(self.spike_clusters==c))
             t += '\n'
         
@@ -443,7 +443,7 @@ class SpikeSorter(object):
         """
         From absolut spike num get seg num
         """
-        for s, sl in self.seg_spike_slices.items():
+        for s, sl in list(self.seg_spike_slices.items()):
             if  num>=sl.start and num<sl.stop:
                 return s
         
@@ -717,7 +717,7 @@ class SpikeSorter(object):
                 to_pop.append(c)
         for c in to_pop:
             self.cluster_names.pop(c)
-        self.cluster_names[n] = u'regrouped small cluster'
+        self.cluster_names[n] = 'regrouped small cluster'
         self.refresh_colors(reset = False)
     
     
@@ -793,8 +793,8 @@ class SpikeSorter(object):
         if self.selected_spikes is not None and self.nb_spikes is not None and \
              self.selected_spikes.size != self.nb_spikes:
             self.selected_spikes = np.zeros( (self.nb_spikes), dtype = bool)
-        for c in self.cluster_names.keys():
-            if c not in self.active_cluster.keys():
+        for c in list(self.cluster_names.keys()):
+            if c not in list(self.active_cluster.keys()):
                 self.active_cluster[c] = True
             if c not in self.cluster_displayed_subset:
                 self.random_display_subset(c)
@@ -824,7 +824,7 @@ class SpikeSorter(object):
             self.cluster_colors = { }
             return
         
-        clusters = self.cluster_names.keys()
+        clusters = list(self.cluster_names.keys())
         for c in np.setdiff1d(list(self.cluster_colors.keys()), clusters):
             self.cluster_colors.pop(c)
         
@@ -832,7 +832,7 @@ class SpikeSorter(object):
             self.cluster_colors = { }
 
         cmap = get_cmap('jet' , len(self.cluster_names)+3)
-        for i , c in enumerate(self.cluster_names.keys()):
+        for i , c in enumerate(list(self.cluster_names.keys())):
             if c in self.cluster_colors: continue
             #~ self.cluster_colors[c] = ColorConverter().to_rgb( cmap(i+2) )
             self.cluster_colors[c] = color_utils.mpl_to_mplRGB( cmap(i+2) )
@@ -844,14 +844,14 @@ class SpikeSorter(object):
         self.displayed_subset_size = displayed_subset_size
         if self.spike_clusters is None: return
         self.cluster_displayed_subset = { }
-        for i , c in enumerate(self.cluster_names.keys()):
+        for i , c in enumerate(list(self.cluster_names.keys())):
             if  self.active_cluster[c]:
                 self.random_display_subset(c)
             else:
                 self.cluster_displayed_subset[c]  = np.array([ ], dtype = int)
     
     def on_clusters_activation_changed(self):
-        for c, activ in self.active_cluster.items():
+        for c, activ in list(self.active_cluster.items()):
             if activ and c not in self.cluster_displayed_subset:
                 self.random_display_subset(c)
             elif activ and self.cluster_displayed_subset[c].size ==0:
@@ -890,7 +890,7 @@ class SpikeSorter(object):
         
         self.refresh_cluster_names()
         self.refresh_colors()
-        for c, name in self.cluster_names.items():
+        for c, name in list(self.cluster_names.items()):
             #~ color = '#'
             #~ for e in self.cluster_colors[c]:
                 #~ colorhex = str(hex(int(e*255))).replace('0x','')

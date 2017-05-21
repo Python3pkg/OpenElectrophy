@@ -90,7 +90,7 @@ class AlignWaveformOnCentralWaveform(object):
                     large_wfs[n,c, :] = sig[ind-swl2:ind+swr2+1]
                 n += 1
         
-        clusters = self.clusters = sps.cluster_names.keys()
+        clusters = self.clusters = list(sps.cluster_names.keys())
         self.deltas = deltas = np.zeros(n_spike)
         
         self.all_centers =  [ ]

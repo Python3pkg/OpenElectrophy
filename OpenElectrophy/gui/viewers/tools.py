@@ -68,7 +68,7 @@ class TimeSeeker(QWidget) :
             
             self.popupStep = QToolButton( popupMode = QToolButton.MenuButtonPopup,
                                                                         toolButtonStyle = Qt.ToolButtonTextBesideIcon,
-                                                                        text = u'Step 50ms'
+                                                                        text = 'Step 50ms'
                                                                         )
             t.addWidget(self.popupStep)
             ag = QActionGroup(self.popupStep )
@@ -147,7 +147,7 @@ class TimeSeeker(QWidget) :
         
     def change_step(self, act):
         t = str(act.text())
-        self.popupStep.setText(u'Step '+t)
+        self.popupStep.setText('Step '+t)
         if t.endswith('ms'):
             self.step_size = float(t[:-2])*1e-3
         else:

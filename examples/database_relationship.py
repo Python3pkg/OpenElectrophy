@@ -42,18 +42,18 @@ if __name__== '__main__':
     bl.save()
     
     # Explore the tree with relationship (like in neo)
-    print bl
+    print(bl)
     for seg in bl.segments:
-        print seg
+        print(seg)
         for ana in seg.analogsignals:
-            print ana
+            print(ana)
         for sptr in seg.spiketrains:
-            print sptr
+            print(sptr)
     for rcg in bl.recordingchannelgroups:
-        print rcg
+        print(rcg)
         for rc in rcg.recordingchannels:
-            print rc
+            print(rc)
         for ut in rcg.units:
-            print ut
+            print(ut)
 
 

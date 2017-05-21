@@ -52,11 +52,11 @@ class SpikeSortingWindow(QMainWindow):
         but =  QToolButton( popupMode = QToolButton.InstantPopup,
                                             toolButtonStyle = Qt.ToolButtonTextBesideIcon,
                                             icon = QIcon(':/view-choose.png' ),
-                                            text = u'Views template')
+                                            text = 'Views template')
         self.toolbar.addWidget(but)
         
         self.list_actTemplate = [ ]
-        for name in view_templates.keys():
+        for name in list(view_templates.keys()):
             act = QAction(name,but, checkable = True)
             self.list_actTemplate.append(act)
             but.addAction(act)
@@ -68,7 +68,7 @@ class SpikeSortingWindow(QMainWindow):
         but =  QToolButton( popupMode = QToolButton.InstantPopup,
                                             toolButtonStyle = Qt.ToolButtonTextBesideIcon,
                                             icon = QIcon(':/plot.png' ),
-                                            text = u'Select displayed plots')
+                                            text = 'Select displayed plots')
         self.toolbar.addWidget(but)
         
         
@@ -143,7 +143,7 @@ class SpikeSortingWindow(QMainWindow):
         # Random a subset
         but =  QToolButton( toolButtonStyle = Qt.ToolButtonTextBesideIcon,
                                             icon = QIcon(':/view-refresh.png' ),
-                                            text = u'Refresh all')
+                                            text = 'Refresh all')
         self.toolbar.addWidget(but)
         but.clicked.connect(self.refresh_all)
         but =  QToolButton(toolButtonStyle = Qt.ToolButtonTextBesideIcon,
@@ -159,14 +159,14 @@ class SpikeSortingWindow(QMainWindow):
         self.toolbar.addSeparator()
         but =  QToolButton(toolButtonStyle = Qt.ToolButtonTextBesideIcon,
                                             icon = QIcon(':/color-picker.png' ),
-                                            text = u'Clear selection')
+                                            text = 'Clear selection')
         but.clicked.connect(self.clear_selection)
         self.toolbar.addWidget(but)
         
         self.toolbar.addSeparator()
         but =  QToolButton(toolButtonStyle = Qt.ToolButtonTextBesideIcon,
                                             icon = QIcon(':/document-save.png' ),
-                                            text = u'Save')
+                                            text = 'Save')
         but.clicked.connect(self.save_to_database)
         self.toolbar.addWidget(but)
         
@@ -296,7 +296,7 @@ class SpikeSortingWindow(QMainWindow):
         i = self.list_actTemplate.index(act)
         for a in self.list_actTemplate: a.setChecked(False)
         act.setChecked(True)
-        self.changeTemplate(view_templates.keys()[i])
+        self.changeTemplate(list(view_templates.keys())[i])
 
     def changeTemplate(self, name = None):
         for i, w in enumerate(self.list_widget):
@@ -310,16 +310,16 @@ class SpikeSortingWindow(QMainWindow):
     def save_to_database(self):
         if self.session is None:
             return
-        msg = u'Units and SPikeTrain will saved directly in opened database.\n'
+        msg = 'Units and SPikeTrain will saved directly in opened database.\n'
         msg += 'Note that old Units and SpikeTrain related to this RecodingChannelGourp will be removed for ever'
-        mb = QMessageBox.warning(self,u'Save to database',msg, 
+        mb = QMessageBox.warning(self,'Save to database',msg, 
                 QMessageBox.Ok ,QMessageBox.Cancel  | QMessageBox.Default  | QMessageBox.Escape,
                 QMessageBox.NoButton)
         if mb == QMessageBox.Cancel : return
         if self.dbinfo.url =='sqlite://':
-            msg = u'You are working in read only neo file. (memory sqlite database).\n'
-            msg += u'Export this result to a file before closing OpenElectrophy \n'
-            mb = QMessageBox.warning(self,u'Save to database',msg, 
+            msg = 'You are working in read only neo file. (memory sqlite database).\n'
+            msg += 'Export this result to a file before closing OpenElectrophy \n'
+            mb = QMessageBox.warning(self,'Save to database',msg, 
                     QMessageBox.Ok ,QMessageBox.NoButton,
                     QMessageBox.NoButton)
         self.spikesorter.save_in_database(self.session, self.dbinfo)

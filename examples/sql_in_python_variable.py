@@ -56,7 +56,7 @@ if __name__== '__main__':
     block_ids, = sql(query1)
 
     for block_id in block_ids:
-        print 'block', block_id
+        print('block', block_id)
         
         # variable query
         for description in descriptions:
@@ -72,7 +72,7 @@ if __name__== '__main__':
                                                     block_id = block_id,
                                                     description = description,
                                                     )
-            print ' has ', len(id_segments), description
+            print(' has ', len(id_segments), description)
 
 
 

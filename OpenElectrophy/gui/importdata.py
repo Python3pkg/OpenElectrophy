@@ -183,7 +183,7 @@ class ImportData(QDialog) :
         if self.ioclass.mode =='file' or self.ioclass.mode =='dir':
             names = [ ]
             for i in range(self.listFiles.count()):
-                names.append( unicode(self.listFiles.item(i).text()) )
+                names.append( str(self.listFiles.item(i).text()) )
         elif self.ioclass.mode =='database' or self.ioclass.mode =='fake':
             names = [ 'fake' ]
         
@@ -209,7 +209,7 @@ class ImportData(QDialog) :
     
     
     def promptOneFileDone(self, name):
-        print('OneFileDone', name)
+        print(('OneFileDone', name))
     
     def importFinished(self):
         
@@ -220,7 +220,7 @@ class ImportData(QDialog) :
                     text+= '    '+f
                 else:
                     text = 'nofile'
-            QMessageBox.warning(self,u'Fail',text,
+            QMessageBox.warning(self,'Fail',text,
                     QMessageBox.Ok , QMessageBox.NoButton)
         self.threadimport = None
         self.setEnabled(True)
@@ -247,7 +247,7 @@ class QImportThread(QThread):
         
     def run(self):
         for i, name in enumerate(self.names):
-            print('runnning', name)
+            print(('runnning', name))
             #try :
             if 1:
                 read_and_import(name, self.ioclass,self.io_kargs, self.dbinfo, self.options)

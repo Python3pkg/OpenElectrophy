@@ -166,7 +166,7 @@ class EpochViewerControler(QWidget):
         self.mainlayout = QVBoxLayout()
         self.setLayout(self.mainlayout)
         
-        t = u'Options for EventArrays'
+        t = 'Options for EventArrays'
         self.setWindowTitle(t)
         self.mainlayout.addWidget(QLabel('<b>'+t+'<\b>'))
         

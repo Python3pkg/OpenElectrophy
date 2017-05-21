@@ -58,7 +58,7 @@ if __name__== '__main__':
     ana.t_start = 0. * pq.s
 
     # ana.signal is a <quantities.quantity.Quantity>
-    print type(ana.signal)
+    print(type(ana.signal))
     
     # so you can play with it
     ana.signal[30:400] = .04 * pq.V

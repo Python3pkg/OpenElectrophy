@@ -43,10 +43,10 @@ if __name__== '__main__':
     seg1.index = 3
 
     # TEXT field in SQL = str in python
-    print seg1.name
-    print type(seg1.name)
+    print(seg1.name)
+    print(type(seg1.name))
 
-    print seg1.id
+    print(seg1.id)
     # give None
 
     # SAVE seg1 to the db (return the id)
@@ -60,5 +60,5 @@ if __name__== '__main__':
     seg2 = Segment.load( id  = my_id)
     # equvalent to
     seg2 = Segment(id = my_id)
-    print seg2.id
-    print seg2.name
+    print(seg2.id)
+    print(seg2.name)

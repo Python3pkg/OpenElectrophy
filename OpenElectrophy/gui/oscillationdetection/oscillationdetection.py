@@ -40,7 +40,7 @@ class OscillationDetection(QWidget) :
         self.session = session
         self.mapped_classes = mapped_classes
         
-        self.setWindowTitle(u'OpenElectrophy Edit oscillation for {}'.format(self.ana.id) )
+        self.setWindowTitle('OpenElectrophy Edit oscillation for {}'.format(self.ana.id) )
         self.setWindowIcon(QIcon(':/oscillation.png'))
         
         
@@ -158,9 +158,9 @@ class OscillationDetection(QWidget) :
         
         #context menu
         self.menu = QMenu()
-        act = self.menu.addAction(u'Delete')
+        act = self.menu.addAction('Delete')
         act.triggered.connect(self.deleteSelection)
-        act = self.menu.addAction(u'Recompute')
+        act = self.menu.addAction('Recompute')
         act.triggered.connect(self.recomputeSelection)
         act = self.menu.addAction(self.tr('Clean'))
         act.triggered.connect(self.cleanSelection)

@@ -161,7 +161,7 @@ class ViewDesigner(QDialog) :
         
         classnames =[ self.treedescription.table_on_top ]
         
-        for tablename, children in self.treedescription.table_children.items():
+        for tablename, children in list(self.treedescription.table_children.items()):
             classname =  tablename_to_class[tablename].__name__
             for child in children:
                 classname =  tablename_to_class[child].__name__
@@ -274,7 +274,7 @@ class ViewDesigner(QDialog) :
         name = str(self.listDisplayedTable.currentItem().text())
         possible_columns = [ 'id' , ]
         tablename_to_class = dict( [(c.tablename, c) for c in self.dbinfo.mapped_classes ] )
-        for attrname, attrtype in tablename_to_class[name].usable_attributes.items() :
+        for attrname, attrtype in list(tablename_to_class[name].usable_attributes.items()) :
             if attrtype != np.ndarray and attrtype != pq.Quantity :
                 possible_columns += [attrname]
         
@@ -304,7 +304,7 @@ class FieldListdesigner(QDialog) :
         self.columns_to_show = list(columns_to_show)
 
         self.possible_columns = [ ]
-        for attrname, attrtype in class_.usable_attributes.items() :
+        for attrname, attrtype in list(class_.usable_attributes.items()) :
             if attrtype != np.ndarray and attrtype != pq.Quantity :
                 self.possible_columns += [attrname]
 

@@ -16,18 +16,18 @@ bl = generate_block_for_sorting(nb_unit = 6,
 rcg = bl.recordingchannelgroups[0]
 spikesorter = SpikeSorter(rcg, initial_state='full_band_signal')
 
-print spikesorter
+print(spikesorter)
 
 # Apply a chain
 spikesorter.ButterworthFilter( f_low = 200.)
 spikesorter.StdThresholdDetection(sign= '-', std_thresh = 6,)
-print spikesorter
+print(spikesorter)
 spikesorter.AlignWaveformOnPeak(left_sweep = 1*pq.ms , right_sweep = 2*pq.ms, sign = '-')
-print spikesorter
+print(spikesorter)
 spikesorter.CombineFeature(use_peak = True, use_peak_to_valley = True, n_pca = 3, n_ica = 3, n_haar = 3, sign = '-')
-print spikesorter
+print(spikesorter)
 spikesorter.SklearnKMeans(n_cluster = 5)
-print spikesorter
+print(spikesorter)
 
 
 
@@ -56,7 +56,7 @@ for s in range(nseg):
         seg_slice = spikesorter.seg_spike_slices[s]
         clusters = spikesorter.spike_clusters[seg_slice]
         
-        for cluster in spikesorter.cluster_names.keys():
+        for cluster in list(spikesorter.cluster_names.keys()):
             mask = clusters == cluster
             ax.plot(pos_on_sig[mask], spikesorter.filtered_sigs[c,s][pos_on_sig[mask]],
                                 color = colors[cluster%len(colors)], ls = 'None', marker = 'o')
@@ -71,7 +71,7 @@ for c in range(nrc):
 fig3 = pyplot.figure()
 ax3 = fig3.add_subplot(1,1,1)
 clusters = spikesorter.spike_clusters
-for cluster in spikesorter.cluster_names.keys():
+for cluster in list(spikesorter.cluster_names.keys()):
     color = colors[cluster%len(colors)]
     mask = clusters == cluster
     for c in range(nrc):

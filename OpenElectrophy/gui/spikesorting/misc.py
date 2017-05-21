@@ -84,13 +84,13 @@ class Summary(SpikeSortingWidgetBase):
         for i, seg in enumerate(sps.segs):
             item = QTableWidgetItem('Seg {}'.format(i))
             self.tableSpikeTrain.setHorizontalHeaderItem( i, item)
-        for j,c  in enumerate(sps.cluster_names.keys()):
+        for j,c  in enumerate(list(sps.cluster_names.keys())):
             nb = np.where(sps.spike_clusters==c)[0].size
             item = QTableWidgetItem('Units : {}\n {}\n nb: {}\n'.format(c, sps.cluster_names[c], nb) )
             self.tableSpikeTrain.setVerticalHeaderItem( j, item)        
         
         for i, seg in enumerate(sps.segs):
-            for j,c  in enumerate(sps.cluster_names.keys()):
+            for j,c  in enumerate(list(sps.cluster_names.keys())):
                 clusters_in_seg = sps.spike_clusters[sps.seg_spike_slices[i]]
                 nb_spikes = np.sum(clusters_in_seg == c)
                 pix = QPixmap(10,10 )
@@ -196,7 +196,7 @@ class PlotCrossCorrelogram(SpikeSortingWidgetBase):
         bin_width = self.plot_parameters['bin_width']
         limit = self.plot_parameters['limit']
          
-        clusters = sps.cluster_names.keys()
+        clusters = list(sps.cluster_names.keys())
         clusters = [ c  for c in clusters if sps.active_cluster[c] ]
         n = len(clusters)
         

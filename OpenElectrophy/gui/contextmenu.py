@@ -37,7 +37,7 @@ class Delete(MenuItem):
                                 'Are you sure?',
                                 'Are you really sure?',
                                 ]:
-            mb = QMessageBox.warning(treeview, u'delete',warn, 
+            mb = QMessageBox.warning(treeview, 'delete',warn, 
                     QMessageBox.Ok ,QMessageBox.Cancel  | QMessageBox.Default  | QMessageBox.Escape,
                     QMessageBox.NoButton)
             if mb == QMessageBox.Cancel : return
@@ -114,18 +114,18 @@ class SaveToFile(MenuItem):
         class_ = treedescription.tablename_to_class[tablename]
         bl = session.query(class_).get(id)
         
-        filters = u''
+        filters = ''
         ext_to_io = { }
         for io in neo.io.iolist:
             if neo.Block in  io.writeable_objects and len(io.extensions)>0:
-                filters += u'{} (*.{});;'.format(io.name, io.extensions[0])
+                filters += '{} (*.{});;'.format(io.name, io.extensions[0])
                 ext_to_io[io.extensions[0]] = io
         
-        filename = QFileDialog.getSaveFileName(treeview,u'Save File',
-                            bl.name or u'',filters)
+        filename = QFileDialog.getSaveFileName(treeview,'Save File',
+                            bl.name or '',filters)
         if filename != '':
-            filename = unicode(filename)
-            for ext, io in ext_to_io.items():
+            filename = str(filename)
+            for ext, io in list(ext_to_io.items()):
                 if filename.endswith('.{}'.format(ext)):
                     io(filename = filename).write(bl.to_neo(cascade = True))
                     return

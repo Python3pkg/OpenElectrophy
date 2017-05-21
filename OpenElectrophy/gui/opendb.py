@@ -114,7 +114,7 @@ class TypeMySQL(DbConnectWithDBList):
             res= engine.execute("CREATE DATABASE `{dbName}`".format(**d) )
             res= engine.execute("GRANT ALL on `{dbName}`.* TO `{user}` ".format( **d) )
         except:
-            QMessageBox.warning(self.widget_createdb,u'Fail','Failed to create a database : check host, user and password', 
+            QMessageBox.warning(self.widget_createdb,'Fail','Failed to create a database : check host, user and password', 
                 QMessageBox.Ok , QMessageBox.NoButton)
 
         
@@ -149,7 +149,7 @@ class TypePostgresSQL(DbConnectWithDBList):
                 cur = conn.cursor()
                 cur.execute('CREATE DATABASE {dbName} OWNER {user}'.format(**d) )
         except:
-            QMessageBox.warning(self.widget_createdb,u'Fail','Failed to create a database : check host, user and password', 
+            QMessageBox.warning(self.widget_createdb,'Fail','Failed to create a database : check host, user and password', 
                 QMessageBox.Ok , QMessageBox.NoButton)
 
 
@@ -186,8 +186,8 @@ class TypeSQLiteHDF5(DbConnect):
     icon =  ':/sqlite_hdf5.png'
 
     def unicode_values_to_str(self, d):
-        for a, v in d.iteritems():
-            if isinstance(v, unicode):
+        for a, v in d.items():
+            if isinstance(v, str):
                 d[a] = d[a].encode('utf-8')
         return d
 

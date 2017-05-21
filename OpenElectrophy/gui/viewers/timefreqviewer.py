@@ -193,7 +193,7 @@ class TimeFreqViewer(ViewerBase):
         ptimefreq = [ p['name'] for p in param_timefreq]
         
         nb_channel = len(self.analogsignals)
-        for k, v in kargs.items():
+        for k, v in list(kargs.items()):
             if k in pglobal:
                 self.paramGlobal.param(k).setValue(v)
             elif k in pchan:
@@ -504,7 +504,7 @@ class TimefreqViewerControler(QWidget):
         #layout
         self.mainlayout = QVBoxLayout()
         self.setLayout(self.mainlayout)
-        t = u'Options for AnalogSignals'
+        t = 'Options for AnalogSignals'
         self.setWindowTitle(t)
         self.mainlayout.addWidget(QLabel('<b>'+t+'<\b>'))
         

@@ -29,10 +29,10 @@ if __name__== '__main__':
     for i in range(5):
         neo_bl = TryItIO().read(nb_segment = 2, duration = 2)
         bl = neo_to_oe(neo_bl, cascade = True)
-        bl.rec_datetime = datetime.datetime(2012, 06, 1+i, 12,30,40)
+        bl.rec_datetime = datetime.datetime(2012, 0o6, 1+i, 12,30,40)
         bl.name = 'test sql %d' %i
         bl.save()
-        print bl
+        print(bl)
 
 
     # select all Block.id after 3 june 2012 and Segment name is 1
@@ -47,27 +47,27 @@ if __name__== '__main__':
                 LIMIT 10
                 """
     block_ids, segment_ids, analogsignal_ids= sql(query)
-    print block_ids
+    print(block_ids)
 
     for i in range(block_ids.size):
-        print i
-        print ' block_id', block_ids[i]
-        print ' segment_id', segment_ids[i]
-        print ' analogsignal_id', analogsignal_ids[i]
+        print(i)
+        print(' block_id', block_ids[i])
+        print(' segment_id', segment_ids[i])
+        print(' analogsignal_id', analogsignal_ids[i])
         
         # load the Block
         bl = Block.load(block_ids[i])
-        print ' ',bl.name
+        print(' ',bl.name)
         
         # load the Segment
         seg = Segment.load( segment_ids[i] )
-        print ' ',seg.name
+        print(' ',seg.name)
         
         
         # load the AnalogSignal
         ana = AnalogSignal.load( analogsignal_ids[i] )
         
-        print ' ', ana.signal.size
+        print(' ', ana.signal.size)
         rms = numpy.sqrt( numpy.mean( (ana.signal**2.) ) )
-        print '     rms', rms
+        print('     rms', rms)
 

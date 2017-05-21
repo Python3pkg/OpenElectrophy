@@ -3,9 +3,9 @@ import sys
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
-import icons
+from . import icons
 
-print dir(icons)
+print(dir(icons))
 if __name__ == '__main__' :
 	app = QApplication(sys.argv)
 	

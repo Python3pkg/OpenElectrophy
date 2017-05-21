@@ -12,12 +12,12 @@ import numpy as np
 
 def merge_blocks(block_list, session = None, dbinfo = None):
     if session is None:
-        from sqlmapper import globalsession
+        from .sqlmapper import globalsession
         session = globalsession
     assert session is not None, 'You must give a session'
 
     if dbinfo is None:
-        from sqlmapper import globaldbinfo
+        from .sqlmapper import globaldbinfo
         dbinfo = globaldbinfo
     assert dbinfo is not None, 'You must give a dbinfo'
     
@@ -73,14 +73,14 @@ def merge_blocks(block_list, session = None, dbinfo = None):
         for i in old_indexes[k]:
             new_rcg.recordingchannels.append(new_rcs[i])
         
-        for unit_name, old_units in old_units[k].items():
+        for unit_name, old_units in list(old_units[k].items()):
             new_unit = Unit(name = unit_name)
             new_rcg.units.append(new_unit)
             for old_unit in old_units:
                 old_to_new_units[old_unit] = new_unit
         
     
-    for old_unit, new_unit in old_to_new_units.items():
+    for old_unit, new_unit in list(old_to_new_units.items()):
         for old_spiketrain in old_unit.spiketrains:
             new_unit.spiketrains.append(old_spiketrain)
     

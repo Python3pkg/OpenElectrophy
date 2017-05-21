@@ -242,7 +242,7 @@ class FeaturesNDViewer(SpikeSortingWidgetBase):
         sps = self.spikesorter
         
         sps.selected_spikes = self.ndviewer.actualSelection
-        for c, active  in sps.active_cluster.items():
+        for c, active  in list(sps.active_cluster.items()):
             if not active:
                 ind = sps.spike_clusters ==c
                 sps.selected_spikes[ind] = False
@@ -260,9 +260,9 @@ class FeaturesNDViewer(SpikeSortingWidgetBase):
         if self.ndviewer.canvas.widgetlock.locked(): return
         if event.button == 3: 
             menu = QMenu()
-            act = menu.addAction(QIcon(':/user-trash.png'), u'Move selection to trash')
+            act = menu.addAction(QIcon(':/user-trash.png'), 'Move selection to trash')
             act.triggered.connect(self.moveSpikeToTrash)
-            act = menu.addAction(QIcon(':/merge.png'), u'Group selection in one unit')
+            act = menu.addAction(QIcon(':/merge.png'), 'Group selection in one unit')
             act.triggered.connect(self.createNewClusterWithSpikes)
             menu.exec_(self.cursor().pos())
     

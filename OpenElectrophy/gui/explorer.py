@@ -122,7 +122,7 @@ class MainExplorer(QWidget) :
         self.deepRefresh()
 
     def createAction(self):
-        self.actionImport = QAction(u'&Import data in this db', self,
+        self.actionImport = QAction('&Import data in this db', self,
                                                                 icon =QIcon(':/svn-update.png'))
         self.actionImport.triggered.connect(self.openImportData)
         self.addAction(self.actionImport)

@@ -27,10 +27,10 @@ if __name__== '__main__':
     # create 5 Block with different dates
     for i in range(5):
         bl = Block(name = 'Block {}'.format(i),
-                        rec_datetime = datetime.datetime(2012, 06, 1+i, 12,30,40)
+                        rec_datetime = datetime.datetime(2012, 0o6, 1+i, 12,30,40)
                         )
         bl.save()
-        print bl.id
+        print(bl.id)
 
     # select all Block.id after 3 june 2010
     query = """
@@ -40,9 +40,9 @@ if __name__== '__main__':
                 Block.rec_datetime > '2012-06-03'
                 """
     ids, names = sql(query)
-    print ids
-    print names
-    print type(names)
+    print(ids)
+    print(names)
+    print(type(names))
 
 
 
@@ -57,9 +57,9 @@ if __name__== '__main__':
                 Block.rec_datetime > '2012-06-03'
                 """
     names, = sql(query)
-    print names #[test sql 2 test sql 3 test sql 4]
-    print type(names) #<type 'numpy.ndarray'>
-    print len(names) # 3
+    print(names) #[test sql 2 test sql 3 test sql 4]
+    print(type(names)) #<type 'numpy.ndarray'>
+    print(len(names)) # 3
     # names is a ndarray
 
 
@@ -71,6 +71,6 @@ if __name__== '__main__':
                 Block.rec_datetime > '2012-06-03'
                 """
     names = sql(query)
-    print names #array([test sql 2, test sql 3, test sql 4], dtype=object)]
-    print type(names) #<type 'list'>
-    print len(names) # 1
+    print(names) #array([test sql 2, test sql 3, test sql 4], dtype=object)]
+    print(type(names)) #<type 'list'>
+    print(len(names)) # 1

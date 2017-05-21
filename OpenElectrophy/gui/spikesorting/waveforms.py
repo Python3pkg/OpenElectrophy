@@ -197,7 +197,7 @@ class AllWaveforms(SpikeSortingWidgetBase):
             ax.set_xticklabels(['']*20)
         
         self.ploted_indices =[ ]
-        for c in sps.cluster_names.keys():
+        for c in list(sps.cluster_names.keys()):
             ind = sps.cluster_displayed_subset[c]
             if ind.size> self.plot_parameters['max_waveform_by_cluster']:
                 ind = ind[:self.plot_parameters['max_waveform_by_cluster']]

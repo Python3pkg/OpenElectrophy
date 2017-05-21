@@ -40,10 +40,10 @@ if __name__== '__main__':
     
     # display unit before sorting
     for u, unit in enumerate(rcg.units):
-        print u, 'unit name', unit.name
+        print(u, 'unit name', unit.name)
         for s, seg in enumerate(rcg.block.segments):
             sptr = seg.spiketrains[u]
-            print ' in Segment', s, 'has SpikeTrain with ', sptr.size
+            print(' in Segment', s, 'has SpikeTrain with ', sptr.size)
 
     # Apply a chain
     spikesorter.ButterworthFilter( f_low = 200.)
@@ -56,13 +56,13 @@ if __name__== '__main__':
 
 
 
-    print
+    print()
 
     # display unit after sorting
     rcg = spikesorter.populate_recordingchannelgroup()
     for u, unit in enumerate(rcg.units):
-        print u, 'unit name', unit.name
+        print(u, 'unit name', unit.name)
         for s, seg in enumerate(rcg.block.segments):
             sptr = seg.spiketrains[u]
-            print ' in Segment', s, 'has SpikeTrain with ', sptr.size
+            print(' in Segment', s, 'has SpikeTrain with ', sptr.size)
 

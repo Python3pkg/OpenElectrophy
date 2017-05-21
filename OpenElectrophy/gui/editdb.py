@@ -45,7 +45,7 @@ class EditFieldsDialog(QDialog):
         self.setLayout(self.mainLayout)
         
         items = { }
-        for attrname, type_ in self.instance.usable_attributes.items():
+        for attrname, type_ in list(self.instance.usable_attributes.items()):
             if type_ == np.ndarray or  type_ ==  pq.Quantity: continue
             val = getattr(instance, attrname)
             if type_ in conversion:
@@ -67,7 +67,7 @@ class EditFieldsDialog(QDialog):
     
     def saveAndClose(self):
         self.params.set()
-        for attrname, type_ in self.instance.usable_attributes.items():
+        for attrname, type_ in list(self.instance.usable_attributes.items()):
             if type_ == np.ndarray or  type_ ==  pq.Quantity: continue
             setattr(self.instance, attrname, getattr(self.params.dataset, attrname))
         self.session.commit()
@@ -157,7 +157,7 @@ class ManyToManyModel(QAbstractItemModel):
 
     def columnCount(self , parentIndex):
         if self.multicolumn:
-            return max([ len(col) for col in self.columns.values() ])+1
+            return max([ len(col) for col in list(self.columns.values()) ])+1
         else:
             return 1
     
@@ -380,7 +380,7 @@ class EditManyToManyWidget(QWidget):
         if len(self.tree1.selectedIndexes()) == 0: return
         if len(self.list1) == 1:
             msg = 'You need at least one RecordinChannelGroup'
-            mb = QMessageBox.warning(self,u'delete',msg, 
+            mb = QMessageBox.warning(self,'delete',msg, 
                     QMessageBox.Ok ,QMessageBox.NoButton  | QMessageBox.Default  | QMessageBox.Escape,
                     QMessageBox.NoButton)
             return
@@ -418,7 +418,7 @@ class EditRecordingChannelGroupsDialog(QDialog):
         self.mainLayout = QVBoxLayout()
         self.setLayout(self.mainLayout)
         
-        self.mainLayout.addWidget(QLabel(u'Drag and drop RCG to RC to create link (or reverse)'))
+        self.mainLayout.addWidget(QLabel('Drag and drop RCG to RC to create link (or reverse)'))
         
         self.editMany = EditManyToManyWidget(class1 = RecordingChannelGroup,
                                         class2 = RecordingChannel,

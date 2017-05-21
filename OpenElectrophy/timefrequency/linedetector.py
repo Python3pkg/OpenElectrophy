@@ -191,7 +191,7 @@ class LineDetector():
         self.list_max = None
     
     def update(self, **params):
-        for k, v in params.items():
+        for k, v in list(params.items()):
             setattr(self, k, v)
         #~ self.__dict__.update(params)
     

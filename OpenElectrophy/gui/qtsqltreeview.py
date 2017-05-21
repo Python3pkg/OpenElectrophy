@@ -59,7 +59,7 @@ class TreeDescription(object):
         for mapped_class in mapped_classes:
             if mapped_class.tablename not in self.columns_to_show :
                 columns = [ ]
-                for attrname, attrtype in mapped_class.usable_attributes.items() :
+                for attrname, attrtype in list(mapped_class.usable_attributes.items()) :
                     if attrtype != np.ndarray and attrtype != pq.Quantity :
                         columns += [attrname]
                 self.columns_to_show[mapped_class.tablename] = columns
@@ -69,7 +69,7 @@ class TreeDescription(object):
                 self.table_children[tablename] = [ ]
         
         self.table_parents = { }
-        for parentname, childrennames in self.table_children.items():
+        for parentname, childrennames in list(self.table_children.items()):
             for childname in childrennames:
                 assert childname not in self.table_parents, 'In treeview a child must have only one parent {} {}'.format(childname, parentname) 
                 self.table_parents[childname] = parentname
@@ -175,7 +175,7 @@ class MyModel(QAbstractItemModel):
         
         # nb of columns
         self.maxColumn = 0
-        for fieldnames in self.td.columns_to_show.values() :
+        for fieldnames in list(self.td.columns_to_show.values()) :
             if len(fieldnames)>self.maxColumn:
                 self.maxColumn = len(fieldnames)+1
         
@@ -255,7 +255,7 @@ class MyModel(QAbstractItemModel):
                 if col not in item.columns_display:
                     if  col ==0:
                         #~ return QVariant( '{} : {}'.format( item.tablename, item.id) )
-                        item.columns_display[col] =  u'{} : {}'.format( item.tablename, item.id) 
+                        item.columns_display[col] =  '{} : {}'.format( item.tablename, item.id) 
                     else :
 
                         #~ t3 = time.time()
@@ -274,9 +274,9 @@ class MyModel(QAbstractItemModel):
                         fieldname= fieldnames[col-1]
                         if hasattr(inst, fieldname):
                             value = getattr(inst, fieldname)
-                            item.columns_display[col] =  u'{} : {}'.format( fieldname, value)
+                            item.columns_display[col] =  '{} : {}'.format( fieldname, value)
                         else:
-                            item.columns_display[col] =  u''
+                            item.columns_display[col] =  ''
                     
                 ret = item.columns_display[col]
                 

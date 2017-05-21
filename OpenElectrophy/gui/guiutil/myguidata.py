@@ -35,7 +35,7 @@ DataSetEditLayout.register(PasswordItem, PasswordLineEditWidget)
 class FloatRangeItem(DataItem):
     def from_string(self, value):
         try:
-            l1,l2 = unicode(value).split(',')
+            l1,l2 = str(value).split(',')
             l1,l2 = float(l1), float(l2)
             return l1,l2
         except:
@@ -57,7 +57,7 @@ class FloatRangeEditWidget(AbstractDataSetWidget):
 
     def value(self):
         try:
-            l1,l2 = unicode(self.edit.text()).split(',')
+            l1,l2 = str(self.edit.text()).split(',')
             l1,l2 = float(l1), float(l2)
             return l1,l2
         except:
@@ -234,14 +234,14 @@ def old_params_to_guidata(oldparams):
     """
 
     if sys.version_info > (3,):
-        unicode=str
+        str=str
     else:
         pass
 
     _convert = { int : IntItem,
                             float : FloatItem,
                             str : StringItem,
-                            unicode: StringItem,
+                            str: StringItem,
                             bool : BoolItem,
                             }
 

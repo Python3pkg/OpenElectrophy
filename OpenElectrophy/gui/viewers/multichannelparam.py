@@ -23,7 +23,7 @@ class MultiChannelParam(QWidget):
         self.setLayout(mainlayout)
         
         self.paramSelection = pg.parametertree.Parameter.create( name='Multiple change for selection', type='group',
-                                                    children = param_by_channel, tip= u'This options apply on selection AnalogSignal on left list')
+                                                    children = param_by_channel, tip= 'This options apply on selection AnalogSignal on left list')
         self.tree = pg.parametertree.ParameterTree()
         self.tree.header().hide()
         self.tree.setParameters(self.paramSelection, showTop=True)
@@ -31,7 +31,7 @@ class MultiChannelParam(QWidget):
         self.paramSelection.sigTreeStateChanged.connect(self.paramChanged)
         
         
-        mainlayout.addWidget(QLabel(u'Select one or several channel\nto change parameters'))
+        mainlayout.addWidget(QLabel('Select one or several channel\nto change parameters'))
         
         names = [ p.name() for p in self.all_params ]
         self.list = QListWidget()

@@ -30,7 +30,7 @@ class OutsideTemplateCleaning(object):
     def run(self, spikesorter, coeff =4., which_sample = 'any_sample'):
         sps = spikesorter
         
-        for c in sps.cluster_names.keys():
+        for c in list(sps.cluster_names.keys()):
             if c==-1: continue
             
             ind = sps.spike_clusters==c

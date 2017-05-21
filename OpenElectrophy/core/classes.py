@@ -42,7 +42,7 @@ with_color = ['AnalogSignal', 'SpikeTrain', 'EventArray', 'EpochArray', 'Unit']
 
 
 oeclasses = [ ]
-for neoname, neoclass in neo.class_by_name.items():
+for neoname, neoclass in list(neo.class_by_name.items()):
     if neoname in not_in_OE:
         continue
     
@@ -121,7 +121,7 @@ for class_ in oeclasses:
 
 # check bijectivity of many_to_one_relationship and one_to_many_relationship
 # check bijectivity of many_to_many_relationship
-for c1 in class_by_name.keys():
+for c1 in list(class_by_name.keys()):
     for c2 in class_by_name[c1].one_to_many_relationship:
         if c1 not in class_by_name[c2].many_to_one_relationship :
             class_by_name[c2].many_to_one_relationship.append(c1)

@@ -62,11 +62,11 @@ if __name__== '__main__':
     dbinfo2 = open_db( url = 'sqlite:///test2.sqlite', myglobals=None, use_global_session = False)
     classes2 = { }
     for c in dbinfo2.mapped_classes:
-        print c
+        print(c)
         classes2[c.__name__] = c
     
     # This are not the same (because could different schema)
-    print classes1['Block'] is classes2['Block']
+    print(classes1['Block'] is classes2['Block'])
     
 
     # You can use sqlalchemy way 
@@ -82,7 +82,7 @@ if __name__== '__main__':
         seg.analogsignals.append(ana)
     session1.add(seg)
     session1.commit()
-    print seg
+    print(seg)
     
 
     # When you open you can change the lazy way of relationship
@@ -94,7 +94,7 @@ if __name__== '__main__':
     seg = session1.query(Segment).first()
     # here the ralationhip is dynamic (=one query)
     for ana in seg.analogsignals.filter_by(description = None).order_by('name'):
-        print ana
+        print(ana)
     
 
     

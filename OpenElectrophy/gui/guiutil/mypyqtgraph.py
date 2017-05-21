@@ -24,7 +24,7 @@ get_dict = to_dict = get_dict_from_group_param
 
 def set_dict_to_param_group(param, d, cascade = False):
     assert param.type() == 'group'
-    for k, v in d.items():
+    for k, v in list(d.items()):
         if type(v) == dict:
             if cascade:
                 set_dict_to_param_group(param.param(k), v, cascade = True)
@@ -77,9 +77,9 @@ class RangeWidget(QWidget):
             value = self.param.value()
         opts = self.param.opts
         if value is None:
-            text = u''
+            text = ''
         else:
-            text = u'{} - {}'.format(*self._val)
+            text = '{} - {}'.format(*self._val)
         self.displayLabel.setText(text)
 
 
@@ -176,9 +176,9 @@ class SpinAndSliderWidget(QWidget):
             value = self.param.value()
         opts = self.param.opts
         if value is None:
-            text = u''
+            text = ''
         else:
-            text = u'{}'.format(self._val)
+            text = '{}'.format(self._val)
         self.displayLabel.setText(text)
 
 
@@ -256,8 +256,8 @@ class QuantityWidget(QWidget):
     
     def spinbox_changed(self, val):
         p, pref = pg.functions.siScale(val)
-        if pref == u'µ':
-            pref = u'u'
+        if pref == 'µ':
+            pref = 'u'
         self._val = pq.Quantity(val*p, units = pref+self.suffix)
         self.sigChanged.emit()
     
@@ -266,7 +266,7 @@ class QuantityWidget(QWidget):
             value = self.param.value()
         opts = self.param.opts
         if value is None:
-            text = u''
+            text = ''
         else:
             text = '{} {}'.format(self._val.magnitude, self._val.dimensionality.string)
         self.displayLabel.setText(text)

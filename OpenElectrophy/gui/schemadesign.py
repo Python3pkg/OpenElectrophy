@@ -43,7 +43,7 @@ translate1 = {
                     }
 
 translate2 = { }
-for k,v in translate1.items():
+for k,v in list(translate1.items()):
     translate2[v] = k
 
 
@@ -56,7 +56,7 @@ class SchemaDesign(QDialog) :
         
         self.dbinfo = dbinfo
         
-        self.setWindowTitle(u'schema designer')
+        self.setWindowTitle('schema designer')
         
         self.mainLayout = QVBoxLayout()
         self.setLayout(self.mainLayout)
@@ -97,7 +97,7 @@ class SchemaDesign(QDialog) :
         self.relationships['one_to_many'] = {'label' : 'Children (one to many)' }
         self.relationships['many_to_many'] = {'label' : 'many to many' }
         
-        for name, d in self.relationships.items():
+        for name, d in list(self.relationships.items()):
             v = QVBoxLayout()
             h1.addLayout(v)
             h  = QHBoxLayout()
@@ -136,7 +136,7 @@ class SchemaDesign(QDialog) :
 
     
     def has_changed(self):
-        for rel in self.new_relationship.values():
+        for rel in list(self.new_relationship.values()):
             if len(rel): return True
         if len(self.new_fields):return True
         if len(self.removed_fields):return True
@@ -146,7 +146,7 @@ class SchemaDesign(QDialog) :
         if num == -1: return
         if self.has_changed():
             warn = 'some changes occures : do you want to apply them ?'
-            mb = QMessageBox.warning(self,u'Apply changes',warn,
+            mb = QMessageBox.warning(self,'Apply changes',warn,
                     QMessageBox.Apply ,QMessageBox.Cancel  | QMessageBox.Default  | QMessageBox.Escape,
                     QMessageBox.NoButton)
             if mb == QMessageBox.Apply :
@@ -169,7 +169,7 @@ class SchemaDesign(QDialog) :
         self.listFields.setRowCount(len(cl.usable_attributes)+len(self.new_fields))
         r=0
         for fields in [ cl.usable_attributes, self.new_fields ]:
-            for fieldname, fieldtype in fields.items():
+            for fieldname, fieldtype in list(fields.items()):
                 item = QTableWidgetItem(fieldname)
                 self.listFields.setItem(r, 0 , item)
                 if  fieldname in self.removed_fields:
@@ -186,7 +186,7 @@ class SchemaDesign(QDialog) :
                 #~ item.setBackground(QBrush(QColor('red')))
                 r+=1
         
-        for name, d in self.relationships.items():
+        for name, d in list(self.relationships.items()):
             d['list'].clear()
             d['list'].addItems(getattr(cl, name+'_relationship'))
             for rel in self.new_relationship[name]:
@@ -198,7 +198,7 @@ class SchemaDesign(QDialog) :
     def addColumn(self):
         class Parameters(DataSet):
             colname = StringItem('name', default = '')
-            coltype = ChoiceItem('type', translate2.keys())
+            coltype = ChoiceItem('type', list(translate2.keys()))
         dia = ParamDialog(Parameters)
         if dia.exec_():
             d = dia.to_dict()
@@ -213,9 +213,9 @@ class SchemaDesign(QDialog) :
         r = item.row()
         attrs = self.genclass.usable_attributes
         if r < len( attrs ):
-            self.removed_fields.append( attrs.keys()[r] )
+            self.removed_fields.append( list(attrs.keys())[r] )
         else:
-            self.new_fields.pop( self.new_fields.keys()[len( attrs ) - r] )
+            self.new_fields.pop( list(self.new_fields.keys())[len( attrs ) - r] )
         self.refresh( )
     
     
@@ -231,7 +231,7 @@ class SchemaDesign(QDialog) :
         if act is None: return
         name = str( act.text() )
         
-        for rel in self.new_relationship.values():
+        for rel in list(self.new_relationship.values()):
             if name in rel: return
         if name in cl.one_to_many_relationship: return
         if name in cl.many_to_one_relationship: return
@@ -264,7 +264,7 @@ class SchemaDesign(QDialog) :
         cl = self.genclass
         tablename_to_class = dict( [(c.tablename, c) for c in self.dbinfo.mapped_classes ] )
         tables = self.dbinfo.metadata.tables
-        for name, relations in self.new_relationship.items():
+        for name, relations in list(self.new_relationship.items()):
             for relation in relations:
                 if name =='many_to_one':
                         create_one_to_many_relationship_if_not_exists(parenttable=tables[relation], childtable=tables[cl.tablename])
@@ -279,7 +279,7 @@ class SchemaDesign(QDialog) :
                     # create_many_to_many_relationship_if_not_exists
         
         
-        for attrname, attrtype in self.new_fields.items():
+        for attrname, attrtype in list(self.new_fields.items()):
             create_column_if_not_exists(tables[self.tablename], attrname,attrtype)
         
         #TODO drop columns

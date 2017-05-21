@@ -23,7 +23,7 @@ class OEBase(object):
     def __init__(self, **kargs):
         for k in self.usable_attributes:
             setattr(self, k, None)
-        for k,v in kargs.items():
+        for k,v in list(kargs.items()):
             if k in self.usable_attributes:
                 setattr(self, k, v)
         self.neoinstance = None
@@ -31,22 +31,22 @@ class OEBase(object):
     
     def __repr__(self):
         #~ t = super(OEBase, self).__repr__()
-        t = u''
-        t += u'\n'
+        t = ''
+        t += '\n'
         if hasattr(self, 'id'):
-            t += u'  id: {}\n'.format(self.id)
+            t += '  id: {}\n'.format(self.id)
         #~ else:
             
-        for attrname, attrtype in self.usable_attributes.items():
+        for attrname, attrtype in list(self.usable_attributes.items()):
             #~ if attrtype not in [ np.ndarray ,pq.Quantity ]:
-                t += u'  {}: {}\n'.format(attrname,getattr(self,attrname))
+                t += '  {}: {}\n'.format(attrname,getattr(self,attrname))
             #~ else:
                 #~ t += '  {} shape: {} \n'.format(attrname,getattr(self,attrname+'_shape'))
         return t
     
     def save(self, session = None):
         if session is None:
-            from sqlmapper import globalsession
+            from .sqlmapper import globalsession
             session = globalsession
         assert session is not None, 'You must give a session for loading {}'.format(cls.__classname__)
         self.update()
@@ -56,7 +56,7 @@ class OEBase(object):
     def update(self, session = None):
         # force the instance to be in session.dirty
         # util for mutable np.array or pq.Quantoties fileds
-        for attrname, attrtype  in self.usable_attributes.items():
+        for attrname, attrtype  in list(self.usable_attributes.items()):
             if attrtype == np.ndarray or attrtype == pq.Quantity :
                 setattr(self, attrname, getattr(self, attrname))
         
@@ -64,7 +64,7 @@ class OEBase(object):
     @classmethod
     def load(cls, id, session = None,):
         if session is None:
-            from sqlmapper import globalsession
+            from .sqlmapper import globalsession
             session = globalsession
         assert session is not None, 'You must give a session for loading {}'.format(cls.__classname__)
         return session.query(cls).get(id)
@@ -86,7 +86,7 @@ class OEBase(object):
           >>> bl2.save()
         """
         if mapped_classes is None:
-            from sqlmapper import globaldbinfo
+            from .sqlmapper import globaldbinfo
             mapped_classes = globaldbinfo.mapped_classes
         assert mapped_classes is not None, 'You must give a mapped_classes'
         

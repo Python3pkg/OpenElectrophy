@@ -43,11 +43,11 @@ if __name__== '__main__':
     open_db( url = 'sqlite:///test.sqlite', myglobals= globals(), use_global_session = True)
     
     import neo
-    import urllib
+    import urllib.request, urllib.parse, urllib.error
     # Plexon files
     distantfile = 'https://portal.g-node.org/neo/plexon/File_plexon_3.plx'
     localfile = './File_plexon_3.plx'
-    urllib.urlretrieve(distantfile, localfile)
+    urllib.request.urlretrieve(distantfile, localfile)
     #create a reader
     reader = neo.io.PlexonIO(filename = 'File_plexon_3.plx')
     # read the block
@@ -61,7 +61,7 @@ if __name__== '__main__':
     #open again, load and transform to neo
     open_db( url = 'sqlite:///test.sqlite', myglobals= globals(), use_global_session = True)
     oe_bl2 = Block(id = bl_id)
-    print type(oe_bl2)
+    print(type(oe_bl2))
     noe_bl2 = oe_bl2.to_neo(cascade = True)
-    print type(noe_bl2)
+    print(type(noe_bl2))
 

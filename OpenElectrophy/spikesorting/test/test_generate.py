@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*- 
-from __future__ import division
+
 
 import unittest
 
@@ -25,7 +25,7 @@ class BasicTest(unittest.TestCase):
                 noise_ratio = 0.2,
                 use_memmap_path = None,
                 )
-        print bl
+        print(bl)
         self.assertIsInstance(bl, neo.Block)
         self.assertEqual(len(bl.segments), 5)
         self.assertEqual(len(bl.recordingchannelgroups), 1)

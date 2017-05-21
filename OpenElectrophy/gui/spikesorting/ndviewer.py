@@ -320,7 +320,7 @@ class NDViewer(QWidget):
         
         if start:
             if self.show_select_tools:
-                for name, but in self.selectButton.items():
+                for name, but in list(self.selectButton.items()):
                     but.setChecked(False)
                     but.setEnabled(False)
                 self.clearSelectBut.setEnabled(False)
@@ -338,7 +338,7 @@ class NDViewer(QWidget):
                 self.tour_running = True
         else:
             if self.show_select_tools:
-                for name, but in self.selectButton.items():
+                for name, but in list(self.selectButton.items()):
                     but.setEnabled(True)
                 self.clearSelectBut.setEnabled(True)
                 self.changeSelectMode()
@@ -409,7 +409,7 @@ class NDViewer(QWidget):
     
     def changeSelectMode(self):
         self.selectMode = None
-        for name, but in self.selectButton.iteritems():
+        for name, but in self.selectButton.items():
             if but.isChecked():
                 self.selectMode = name
         for e in self.toBeDisconnected:
@@ -541,7 +541,7 @@ class NDViewer(QWidget):
         x,y = event.xdata, event.ydata
 
         self.poly.xy[self._ind] = x,y
-        self.line.set_data(zip(*self.poly.xy))
+        self.line.set_data(list(zip(*self.poly.xy)))
         self.redraw()
 
         self.actualSelection = inside_poly(np.dot( self.data, self.projection ), self.poly.xy)

@@ -112,7 +112,7 @@ def stupid_waveform_generator(n, trodness, sampling_rate):
     def random_param_in_range():
         np.random.seed()
         centers = { }
-        for p, r in parameter_range.items():
+        for p, r in list(parameter_range.items()):
             val = np.random.rand()*np.diff(r)+r[0]
             centers[p] = val
         return centers
@@ -122,7 +122,7 @@ def stupid_waveform_generator(n, trodness, sampling_rate):
         initial_params = random_param_in_range()
         for j in range(n):
             params = { }
-            for p, r in parameter_range.items():
+            for p, r in list(parameter_range.items()):
                 params[p] = initial_params[p] + np.diff(r)*.02 * np.random.randn()
             waveforms[j,i,:] = params['amp1']*np.exp(-(t-params['mu1'])**2/params['sigma1']**2) + params['amp2']* np.exp(-(t-params['mu2'])**2/params['sigma2']**2)
     

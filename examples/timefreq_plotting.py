@@ -32,9 +32,9 @@ if __name__== '__main__':
                             deltafreq = .5,
                             f0 = 2.5,
                             )
-    print tfr.freqs
-    print tfr.times
-    print tfr.map.shape, tfr.map.dtype
+    print(tfr.freqs)
+    print(tfr.times)
+    print(tfr.map.shape, tfr.map.dtype)
     
     
     # plot it

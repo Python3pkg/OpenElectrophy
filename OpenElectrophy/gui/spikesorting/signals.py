@@ -110,7 +110,7 @@ class SignalAndSpike(SpikeSortingWidgetBase):
         self.treeParam = pg.parametertree.ParameterTree(parent  = self)
         self.treeParam.header().hide()
         self.treeParam.setParameters(self.params, showTop=True)
-        self.treeParam.setWindowTitle(u'Options for signal viewer')
+        self.treeParam.setWindowTitle('Options for signal viewer')
         self.treeParam.setWindowFlags(Qt.Window)
 
         
@@ -144,7 +144,7 @@ class SignalAndSpike(SpikeSortingWidgetBase):
         
         # winsize
         self.xsize = .5
-        tb.addWidget(QLabel(u'X size (s)'))
+        tb.addWidget(QLabel('X size (s)'))
         self.xsize_changer = SpinAndSliderWidget(value = self.xsize, limits = [0.001, 10.],orientation  = Qt.Horizontal)
         self.xsize_changer.sigChanged.connect(self.xsize_changed)
         tb.addWidget(self.xsize_changer)
@@ -159,7 +159,7 @@ class SignalAndSpike(SpikeSortingWidgetBase):
                 self.ylims[0] = min(self.ylims[0], sig.min())
                 self.ylims[1] = max(self.ylims[1], sig.max())
         
-        tb.addWidget(QLabel(u'Y limits'))
+        tb.addWidget(QLabel('Y limits'))
         
         self.ylims_changer = RangeWidget(value = self.ylims, orientation  = Qt.Horizontal)
         self.ylims_changer.sigChanged.connect(self.ylims_changed)
@@ -169,11 +169,11 @@ class SignalAndSpike(SpikeSortingWidgetBase):
 
         
         # add spike
-        self.act_add_one_spike = QAction(u'+', self,icon =QIcon(':/list-add.png'), checkable = True)
+        self.act_add_one_spike = QAction('+', self,icon =QIcon(':/list-add.png'), checkable = True)
         tb.addAction(self.act_add_one_spike)
-        self.act_enable_spike_selection = QAction(u'+', self,icon =QIcon(':/color-picker.png'), checkable = True)
+        self.act_enable_spike_selection = QAction('+', self,icon =QIcon(':/color-picker.png'), checkable = True)
         tb.addAction(self.act_enable_spike_selection)
-        self.act_open_pref = QAction(u'+', self,icon =QIcon(':/preferences-system.png'), checkable = True)
+        self.act_open_pref = QAction('+', self,icon =QIcon(':/preferences-system.png'), checkable = True)
         tb.addAction(self.act_open_pref)
         self.act_open_pref.triggered.connect(self.open_preference)
         
@@ -242,7 +242,7 @@ class SignalAndSpike(SpikeSortingWidgetBase):
             
             # remove old ones
             for i, scatter in enumerate(self.scatters):
-                for c in scatter.keys():
+                for c in list(scatter.keys()):
                     if c=='sel' : continue
                     if c not in sps.cluster_names:
                         self.plots[i].removeItem(scatter[c])
@@ -250,7 +250,7 @@ class SignalAndSpike(SpikeSortingWidgetBase):
             
             # Spikes by cluster
             vpos = pos[inwindow]
-            for c in sps.cluster_names.keys():
+            for c in list(sps.cluster_names.keys()):
                 clusters = sps.spike_clusters[sl][inwindow]
                 ind = vpos[clusters == c]
                 r,g,b = sps.cluster_colors[c]
@@ -299,7 +299,7 @@ class SignalAndSpike(SpikeSortingWidgetBase):
         self.timerSeeker.set_start_stop(t_start.magnitude-.05,t_stop.magnitude+.05, seek = False)
         self.timerSeeker.seek(self.time_by_seg[s])
         
-        for c in sps.cluster_names.keys():
+        for c in list(sps.cluster_names.keys()):
             r,g,b = sps.cluster_colors[c]
             color = QColor( r*255,g*255,b*255  )
             for i, scatter in enumerate(self.scatters):

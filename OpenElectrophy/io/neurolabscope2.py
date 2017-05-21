@@ -87,7 +87,7 @@ class Neurolabscope2IO(BaseIO):
                 arr = np.memmap(filename = os.path.join(self.dirname,stream['name']+'.raw'), mode = 'r', dtype = np.uint8)
                 arr = arr.reshape(-1, dim1)
                 if digital_channels == 'all':
-                    digital_channels = range(stream['nb_channel'])
+                    digital_channels = list(range(stream['nb_channel']))
                 for chan in digital_channels:
                     b = chan//8
                     mask = 1<<(chan%8)

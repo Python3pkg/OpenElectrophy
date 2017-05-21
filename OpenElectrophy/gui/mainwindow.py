@@ -59,17 +59,17 @@ class MainWindow(QMainWindow) :
         
         
     def createActions(self):
-        self.actionCreateDb = QAction(u'&Create a new database', self,
+        self.actionCreateDb = QAction('&Create a new database', self,
                                                                 shortcut = "Ctrl+C",
                                                                 icon =QIcon(':/create-db.png'))
         self.actionCreateDb.triggered.connect(self.createDatabase)
         
-        self.actionOpenDb = QAction(u'&Open a database', self,
+        self.actionOpenDb = QAction('&Open a database', self,
                                                                 shortcut = "Ctrl+O",
                                                                 icon =QIcon(':/open-db.png'))
         self.actionOpenDb.triggered.connect(self.openDatabaseDialog)
         
-        self.actionOpenFile = QAction(u'Open read only file with neo (in memory DB)', self,
+        self.actionOpenFile = QAction('Open read only file with neo (in memory DB)', self,
                                                                 icon =QIcon(':/document-open-folder.png'))
         self.actionOpenFile.triggered.connect(self.openNeoFile)
 
@@ -102,7 +102,7 @@ class MainWindow(QMainWindow) :
         self.fileMenu.addSeparator()
         
         
-        self.recentlyOpenedMenu = self.fileMenu.addMenu(QIcon(':/view-history.png'), u'Recently opened databases')
+        self.recentlyOpenedMenu = self.fileMenu.addMenu(QIcon(':/view-history.png'), 'Recently opened databases')
         self.refresh_recentlyOpenedMenu()
         
         
